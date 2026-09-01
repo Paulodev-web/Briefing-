@@ -1,13 +1,12 @@
 import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
+import { getAuthUser } from "@/lib/supabase/auth"
 import { LoginForm } from "./LoginForm"
 
 export default async function LoginPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (user) {
-    redirect("/admin")
+    redirect("/admin/briefings")
   }
 
   return <LoginForm />

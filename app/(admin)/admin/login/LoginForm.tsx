@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,11 +9,14 @@ import Image from "next/image"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 export function LoginForm() {
-  const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    createClient().auth.signOut()
+  }, [])
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
@@ -30,8 +32,7 @@ export function LoginForm() {
       return
     }
 
-    router.push("/admin")
-    router.refresh()
+    window.location.assign("/admin/briefings")
   }
 
   return (
