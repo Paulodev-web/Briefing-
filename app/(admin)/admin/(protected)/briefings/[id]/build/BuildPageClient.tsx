@@ -12,6 +12,7 @@ import {
   Loader2, Sparkles
 } from "lucide-react"
 import Link from "next/link"
+import { getAppUrl } from "@/lib/utils"
 import type { Briefing, BriefingSchema } from "@/lib/types"
 
 const FIELD_LOCKED_STATUSES = ["in_progress", "completed"]
@@ -31,7 +32,7 @@ export function BuildPageClient({
 
   const isLocked = FIELD_LOCKED_STATUSES.includes(briefing.status)
   const isPublished = briefing.status === "published"
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? ""
+  const appUrl = getAppUrl()
   const publicLink = `${appUrl}/b/${briefing.access_token}`
 
   async function handleGenerate() {

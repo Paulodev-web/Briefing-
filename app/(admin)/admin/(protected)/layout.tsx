@@ -1,6 +1,14 @@
 import Image from "next/image"
+import { redirect } from "next/navigation"
+import { createClient } from "@/lib/supabase/server"
 
-export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
+export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/admin/login")
+  }
   return (
     <div className="min-h-screen bg-muted/20">
       <header className="border-b bg-background">

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { deleteBriefing } from "@/lib/actions/briefings"
+import { getAppUrl } from "@/lib/utils"
 import { Check, Copy, ExternalLink, Eye, Settings2, Trash2 } from "lucide-react"
 import type { Briefing, BriefingStatus } from "@/lib/types"
 
@@ -20,7 +21,7 @@ export function BriefingCard({ briefing }: { briefing: Briefing }) {
   const [isPending, startTransition] = useTransition()
   const [copied, setCopied] = useState(false)
   const { label, variant } = statusConfig[briefing.status]
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? ""
+  const appUrl = getAppUrl()
   const publicLink = `${appUrl}/b/${briefing.access_token}`
 
   async function handleCopy() {
